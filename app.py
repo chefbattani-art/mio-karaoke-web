@@ -1,34 +1,40 @@
 import streamlit as st
+import urllib.parse
 
-# Configurazione della pagina
-st.set_page_config(page_title="Mini Karaoke Finder", page_icon="🎤")
+st.set_page_config(page_title="Karaoke Italiano Universale", page_icon="🎤")
 
-# Database di esempio
-CANZONI = [
-    {"titolo": "Imagine", "artista": "John Lennon", "link": "https://www.youtube.com/watch?v=yRhq-yO1KN8"},
-    {"titolo": "Bohemian Rhapsody", "artista": "Queen", "link": "https://www.youtube.com/watch?v=fJ9rUzIMcZQ"},
-    {"titolo": "Azzurro", "artista": "Adriano Celentano", "link": "https://www.youtube.com/watch?v=sO7N7m4hWWA"},
-    {"titolo": "I Will Survive", "artista": "Gloria Gaynor", "link": "https://www.youtube.com/watch?v=ZBR2G-iI3-I"},
-    {"titolo": "La solitudine", "artista": "Laura Pausini", "link": "https://www.youtube.com/watch?v=1b5x-Q5yZ0Y"}
-]
+st.title("🎤 Karaoke Italiano Universale")
+st.write("Scrivi qualsiasi canzone o artista italiano (anche gli ultimi successi) e aprila subito su YouTube!")
 
-st.title("🎤 Mini Karaoke Finder")
-st.write("Cerca la tua canzone preferita e clicca per cantare!")
+# Barra di ricerca libera
+ricerca = st.text_input("Cerca un brano o un artista italiano:", "")
 
-# Barra di ricerca interattiva
-ricerca = st.text_input("Cerca per titolo o artista:", "").lower()
-
-# Filtra le canzoni
 if ricerca:
-    risultati = [c for c in CANZONI if ricerca in c["titolo"].lower() or ricerca in c["artista"].lower()]
+    # Aggiunge automaticamente la parola "karaoke" alla ricerca per trovare subito la base
+    query_completa = ricerca + " karaoke italiano"
+    query_encoded = urllib.parse.quote(query_completa)
+    
+    # Link diretto ai risultati di ricerca di YouTube
+    url_yt = f"https://www.youtube.com/results?search_query={query_encoded}"
+    
+    st.write("---")
+    st.success(Risultati pronti per: **{ricerca}**)
+    
+    # Pulsante grande per aprire la ricerca su YouTube
+    st.markdown(f"""
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{url_yt}" target="_blank" style="background-color: #FF0000; color: white; padding: 15px 30px; text-decoration: none; font-size: 18px; font-weight: bold; border-radius: 30px; display: inline-block;">
+                ▶ Canta "{ricerca}" su YouTube
+            </a>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    st.info("💡 Cliccando sul pulsante si aprirà YouTube con tutte le basi karaoke disponibili per la tua ricerca.")
 else:
-    risultati = CANZONI
-
-st.write("---")
-
-# Mostra i risultati
-if risultati:
-    for c in risultati:
-        st.markdown(f"🎵 **{c['titolo']}** — *{c['artista']}* [👉 Canta qui]({c['link']})")
-else:
-    st.warning("Nessuna canzone trovata.")
+    st.write("---")
+    st.markdown("### Suggerimenti del momento:")
+    st.write("- 🎵 *Tredici Pietro*")
+    st.write("- 🎵 *Annalisa*")
+    st.write("- 🎵 *Marco Mengoni*")
+    st.write("- 🎵 *Geolier*")
+    st.write("Digita pure qualsiasi altro nome o canzone nello spazio in alto!")
