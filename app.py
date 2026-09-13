@@ -18,7 +18,7 @@ if ricerca:
     url_yt = f"https://www.youtube.com/results?search_query={query_encoded}"
     
     st.write("---")
-    st.success(Risultati pronti per: **{ricerca}**)
+    st.success(f"Risultati pronti per: **{ricerca}**")
     
     # Pulsante grande per aprire la ricerca su YouTube
     st.markdown(f"""
@@ -33,8 +33,8 @@ if ricerca:
 else:
     st.write("---")
     st.markdown("### Suggerimenti del momento:")
-    st.write("- 🎵 *Tredici Pietro*")
     st.write("- 🎵 *Annalisa*")
     st.write("- 🎵 *Marco Mengoni*")
     st.write("- 🎵 *Geolier*")
+    st.write("- 🎵 *Laura Pausini*")
     st.write("Digita pure qualsiasi altro nome o canzone nello spazio in alto!")
